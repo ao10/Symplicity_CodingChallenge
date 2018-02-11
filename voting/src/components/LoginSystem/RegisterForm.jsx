@@ -2,6 +2,7 @@ import React from 'react';
 import TextField from 'material-ui/TextField';
 import { Vertical, Horizontal } from 'react-stack';
 import RaisedButton from 'material-ui/RaisedButton';
+import axios from 'axios';
 
 export default class RegisterForm extends React.Component {
     constructor(props) {
@@ -15,7 +16,7 @@ export default class RegisterForm extends React.Component {
         this.handlePasswordChange = this.handlePasswordChange.bind(this);
         this.handleEmailChange = this.handleEmailChange.bind(this);
     }
-    
+
     handleUsernameChange = event => {
         this.setState({
             username: event.target.value,
@@ -23,7 +24,7 @@ export default class RegisterForm extends React.Component {
     };
     handlePasswordChange = event => {
         this.setState({
-            password:event.target.value
+            password: event.target.value
         });
     };
     handleEmailChange = event => {
@@ -37,35 +38,46 @@ export default class RegisterForm extends React.Component {
             password: this.state.password,
             email: this.state.email
         }
+        //Make a POST call to the server using axios.
+        if (this.state.username == '' || this.state.password == '' || this.state.email == '') {
+            console.log("Please fill all fields")
+        }
+        else {
+            axios.post('http://localhost:8080/register', formData)
+                .then(function (response) {
+                    console.log(response);
+                })
+                .catch(function (error) {
+                    alert(error);
+                })
+        }
     }
-
 
     render() {
         return (
-            // <div style={this.props.divStyle}>
             <div style={this.props.style}>
                 <form type="submit">
                     <Vertical alignItems={'center'}>
-                        <h1>Register Form</h1>
                         <TextField
-                            id="text-field-controlled"
                             floatingLabelText="Username"
                             value={this.state.username}
                             onChange={this.handleUsernameChange}
+                            required
                         />
                         <TextField
-                            id="text-field-controlled"
+                            type="password"
                             floatingLabelText="Password"
                             value={this.state.password}
                             onChange={this.handlePasswordChange}
+                            required
                         />
                         <TextField
-                            id="text-field-controlled"
                             floatingLabelText="E-mail"
                             value={this.state.email}
                             onChange={this.handleEmailChange}
+                            required
                         />
-                        <RaisedButton label="Submit" type="submit" onClick={this.handleSubmit}/>
+                        <RaisedButton label="Create Account" type="submit" onClick={this.handleSubmit} />
                     </Vertical>
                 </form>
             </div>

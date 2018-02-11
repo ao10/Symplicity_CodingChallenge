@@ -2,6 +2,7 @@ import React from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import { Vertical, Horizontal } from 'react-stack';
+import axios from 'axios';
 
 export default class LoginForm extends React.Component {
     constructor(props) {
@@ -17,23 +18,41 @@ export default class LoginForm extends React.Component {
     handleUsernameChange = event => {
         this.setState({
             username: event.target.value
-            //[event.target.id]: event.target.value,
-            //[event.target.id]: event.target.value,
         });
     };
 
     handlePasswordChange = event => {
         this.setState({
             password: event.target.value
-            //[event.target.id]: event.target.value,
-            //[event.target.id]: event.target.value,
         });
     };
 
     handleSubmit = event => {
+        //Don't let page refresh after submitting form
+        event.preventDefault();
         const formData = {
             username: this.state.username,
             password: this.state.password,
+        }
+        //Make a POST call to the server using axios.
+        if (this.state.username == '' || this.state.password == '') {
+            console.log("Please fill all fields")
+        }
+        else {
+            axios.post('http://localhost:8080/login', formData)
+                .then(response => {
+                    if(response.status == 404){
+                        alert("Account not found. Please create a new account.");               
+                    }
+                    if(response.status == 200){
+                        alert("Login successful!");
+                    }
+                })
+                .catch( error => {
+                    console.log(error.response);
+                    alert(error);
+                })
+
         }
     }
 
@@ -42,20 +61,20 @@ export default class LoginForm extends React.Component {
             <div style={this.props.style}>
                 <form type="submit">
                     <Vertical alignItems={'center'}>
-                        <h1>Login Form</h1>
                         <TextField
-                            id="text-field-controlled"
                             floatingLabelText="Username"
                             value={this.state.username}
                             onChange={this.handleUsernameChange}
+                            required
                         />
                         <TextField
-                            id="text-field-controlled"
+                            type="password"
                             floatingLabelText="Password"
                             value={this.state.password}
                             onChange={this.handlePasswordChange}
+                            required
                         />
-                        <RaisedButton label="Submit" type="submit" onClick={this.handleSubmit}/>
+                        <RaisedButton label="Login" type="submit" onClick={this.handleSubmit} />
                     </Vertical>
                 </form>
 
