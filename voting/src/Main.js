@@ -5,12 +5,17 @@ import './App.css';
 
 class Main extends React.Component {
   render() {
-    var divStyle = {
-      width: '200 px'
-  }
+  //   var divStyle = {
+  //     width: '200 px',
+  //     color: 'green',
+  // }
     return (
       <div className="Main">
-      <LoginContainer />
+      <LoginContainer  
+        // style={divStyle} 
+        containerWidth={'50%'} 
+        containerHeight={'50%'}
+      />
       </div>
     );
   }
