@@ -1,6 +1,5 @@
 import React from 'react';
 import LoginContainer from './components/LoginSystem/LoginContainer';
-import logo from './logo.svg';
 import './App.css';
 
 class Main extends React.Component {
@@ -13,8 +12,8 @@ class Main extends React.Component {
       <div className="Main">
       <LoginContainer  
         // style={divStyle} 
-        containerWidth={'50%'} 
-        containerHeight={'50%'}
+        //containerWidth={'50%'} 
+        //containerHeight={'50%'}
       />
       </div>
     );

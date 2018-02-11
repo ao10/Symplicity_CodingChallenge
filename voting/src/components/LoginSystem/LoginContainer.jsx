@@ -1,11 +1,10 @@
 import React from 'react';
-import RaisedButton from 'material-ui/RaisedButton';
 import { Tabs, Tab } from 'material-ui/Tabs';
 import SwipeableViews from 'react-swipeable-views';
 import LoginForm from './LoginForm';
 import RegisterForm from './RegisterForm';
 import Dimensions from 'react-dimensions';
-import centerComponent from 'react-center-component';
+import { Vertical, Horizontal } from 'react-stack';
 
 export default class LoginContainer extends React.Component {
     constructor(props) {
@@ -21,18 +20,19 @@ export default class LoginContainer extends React.Component {
     }
     render() {
         var divStyle = {
-            //width: '100 px',
-            background: 'green'
+           // background:'green',
+//            'vertical-align':'middle',
+            display:'flex',
+  //          'align-items':'center',
+            justifyContent:'center',
+      //      'text-align':'center'
         }
         return (
-            <div
-                containerWidth={this.props.containerWidth}
-                containerHeight={this.props.containerHeight}
+            <div style={{marginTop: '10%'}}
+                //containerWidth={this.props.containerWidth}
+                //containerHeight={this.props.containerHeight}
             >
-                <h1>LoginContainer</h1>
-                <RaisedButton label="Login" />
-                <RaisedButton label="Register" />
-                <RaisedButton label="Submit" />
+            <Vertical alignItems={'center'}>
                 <Tabs
                     tabItemContainerStyle={{ width: '500px' }}
                     onChange={this.handleChange}
@@ -49,6 +49,7 @@ export default class LoginContainer extends React.Component {
                     <LoginForm style={divStyle}/>
                     <RegisterForm style={divStyle}/>
                 </SwipeableViews>
+                </Vertical>
             </div>
         );
     }
