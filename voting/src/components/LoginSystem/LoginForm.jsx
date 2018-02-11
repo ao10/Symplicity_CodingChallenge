@@ -10,36 +10,52 @@ export default class LoginForm extends React.Component {
             username: '',
             password: '',
         }
-        //this.handleChange = this.handleChange.bind(this);
+        this.handleUsernameChange = this.handleUsernameChange.bind(this);
+        this.handlePasswordChange = this.handlePasswordChange.bind(this);
     }
 
-    handleChange = event => {
+    handleUsernameChange = event => {
         this.setState({
-            [event.target.id]: event.target.value,
-            [event.target.id]: event.target.value,
+            username: event.target.value
+            //[event.target.id]: event.target.value,
+            //[event.target.id]: event.target.value,
         });
     };
+
+    handlePasswordChange = event => {
+        this.setState({
+            password: event.target.value
+            //[event.target.id]: event.target.value,
+            //[event.target.id]: event.target.value,
+        });
+    };
+
+    handleSubmit = event => {
+        const formData = {
+            username: this.state.username,
+            password: this.state.password,
+        }
+    }
 
     render() {
         return (
             <div style={this.props.style}>
-                <form>
+                <form type="submit">
                     <Vertical alignItems={'center'}>
                         <h1>Login Form</h1>
-                        <br />
                         <TextField
                             id="text-field-controlled"
-                            hintText="Username"
+                            floatingLabelText="Username"
                             value={this.state.username}
-                            onChange={this.handleChange.bind(this)}
+                            onChange={this.handleUsernameChange}
                         />
                         <TextField
                             id="text-field-controlled"
-                            placeholder="Password"
+                            floatingLabelText="Password"
                             value={this.state.password}
-                            onChange={this.handleChange.bind(this)}
+                            onChange={this.handlePasswordChange}
                         />
-                        <RaisedButton label="Submit" />
+                        <RaisedButton label="Submit" type="submit" onClick={this.handleSubmit}/>
                     </Vertical>
                 </form>
 

@@ -20,35 +20,35 @@ export default class LoginContainer extends React.Component {
     }
     render() {
         var divStyle = {
-           // background:'green',
-//            'vertical-align':'middle',
-            display:'flex',
-  //          'align-items':'center',
-            justifyContent:'center',
-      //      'text-align':'center'
+            // background:'green',
+            //            'vertical-align':'middle',
+            display: 'flex',
+            //          'align-items':'center',
+            justifyContent: 'center',
+            //      'text-align':'center'
         }
         return (
-            <div style={{marginTop: '10%'}}
-                //containerWidth={this.props.containerWidth}
-                //containerHeight={this.props.containerHeight}
+            <div style={{ marginTop: '10%' }}
+            //containerWidth={this.props.containerWidth}
+            //containerHeight={this.props.containerHeight}
             >
-            <Vertical alignItems={'center'}>
-                <Tabs
-                    tabItemContainerStyle={{ width: '500px' }}
-                    onChange={this.handleChange}
-                    value={this.state.slideIndex}
-                >
-                    <Tab label="Login" value={0} ></Tab>
-                    <Tab label="Register" value={1} ></Tab>
-                </Tabs>
-                <SwipeableViews
-                    style={{width:'500px'}}
-                    index={this.state.slideIndex}
-                    onChangeIndex={this.handleChange}
-                >
-                    <LoginForm style={divStyle}/>
-                    <RegisterForm style={divStyle}/>
-                </SwipeableViews>
+                <Vertical alignItems={'center'}>
+                    <Tabs
+                        tabItemContainerStyle={{ width: '500px' }}
+                        onChange={this.handleChange}
+                        value={this.state.slideIndex}
+                    >
+                        <Tab label="Login" value={0} ></Tab>
+                        <Tab label="Register" value={1} ></Tab>
+                    </Tabs>
+                    <SwipeableViews
+                        style={{ width: '500px' }}
+                        index={this.state.slideIndex}
+                        onChangeIndex={this.handleChange}
+                    >
+                        <LoginForm style={divStyle} />
+                        <RegisterForm style={divStyle} />
+                    </SwipeableViews>
                 </Vertical>
             </div>
         );
