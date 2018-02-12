@@ -3,6 +3,7 @@ import TextField from 'material-ui/TextField';
 import { Vertical, Horizontal } from 'react-stack';
 import RaisedButton from 'material-ui/RaisedButton';
 import axios from 'axios';
+import Snackbar from 'material-ui/Snackbar/Snackbar';
 
 export default class RegisterForm extends React.Component {
     constructor(props) {
@@ -10,11 +11,13 @@ export default class RegisterForm extends React.Component {
         this.state = {
             username: '',
             password: '',
-            email: ''
+            email: '',
+            open: false //this is for snackbar
         }
         this.handleUsernameChange = this.handleUsernameChange.bind(this);
         this.handlePasswordChange = this.handlePasswordChange.bind(this);
         this.handleEmailChange = this.handleEmailChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     handleUsernameChange = event => {
@@ -33,6 +36,7 @@ export default class RegisterForm extends React.Component {
         });
     };
     handleSubmit = event => {
+        event.preventDefault();
         const formData = {
             username: this.state.username,
             password: this.state.password,
@@ -44,11 +48,16 @@ export default class RegisterForm extends React.Component {
         }
         else {
             axios.post('http://localhost:8080/register', formData)
-                .then(function (response) {
-                    console.log(response);
+                .then(response => {
+                    if(response.status == 200){
+                        this.setState({
+                            //This is for our Snackbar component
+                            open: true,
+                        })
+                    }
                 })
                 .catch(function (error) {
-                    alert(error);
+                    console.log(error.response);
                 })
         }
     }
@@ -76,8 +85,8 @@ export default class RegisterForm extends React.Component {
                             value={this.state.email}
                             onChange={this.handleEmailChange}
                             required
-                        />
-                        <RaisedButton label="Create Account" type="submit" onClick={this.handleSubmit} />
+                        />                    
+                        <RaisedButton label="Create Account" type="submit" onClick={this.handleSubmit} />                    
                     </Vertical>
                 </form>
             </div>

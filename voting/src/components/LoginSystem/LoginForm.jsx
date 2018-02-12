@@ -1,6 +1,7 @@
 import React from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
+import Snackbar from 'material-ui/Snackbar';
 import { Vertical, Horizontal } from 'react-stack';
 import axios from 'axios';
 
@@ -10,11 +11,18 @@ export default class LoginForm extends React.Component {
         this.state = {
             username: '',
             password: '',
+            open: false, //This is for snackbar
+            statusCode: null,
         }
         this.handleUsernameChange = this.handleUsernameChange.bind(this);
         this.handlePasswordChange = this.handlePasswordChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
-
+    update = (e) => {
+        alert(e.target.value);
+        this.props.onUpdate(e.target.value);
+        this.setState({statusCode: e.target.value});
+    }
     handleUsernameChange = event => {
         this.setState({
             username: event.target.value
@@ -27,12 +35,17 @@ export default class LoginForm extends React.Component {
         });
     };
 
+    handleStatusChange = value => {
+        this.props.handleStatus(value);
+    }
+
     handleSubmit = event => {
         //Don't let page refresh after submitting form
         event.preventDefault();
         const formData = {
             username: this.state.username,
             password: this.state.password,
+            statusCode: this.state.statusCode,
         }
         //Make a POST call to the server using axios.
         if (this.state.username == '' || this.state.password == '') {
@@ -45,14 +58,18 @@ export default class LoginForm extends React.Component {
                         alert("Account not found. Please create a new account.");               
                     }
                     if(response.status == 200){
-                        alert("Login successful!");
+                        this.handleStatusChange(200);
+                        this.setState({
+                            //This is for our Snackbar component
+                            open: true,
+                        })
+                        //alert("Login successful!");                        
                     }
                 })
                 .catch( error => {
                     console.log(error.response);
                     alert(error);
                 })
-
         }
     }
 
@@ -74,10 +91,14 @@ export default class LoginForm extends React.Component {
                             onChange={this.handlePasswordChange}
                             required
                         />
-                        <RaisedButton label="Login" type="submit" onClick={this.handleSubmit} />
+                        <RaisedButton label="Login" type="submit" onClick={this.handleSubmit}/>
                     </Vertical>
                 </form>
-
+                <Snackbar
+                            open={this.state.open}
+                            message="Login succesful."
+                            autoHideDuration={100}
+                />
             </div>
 
         );

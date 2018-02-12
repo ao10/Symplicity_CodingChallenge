@@ -33,27 +33,27 @@ app.get('/', (req, res) => {
 app.post('/login', function (req, res) {
     //res.send('Login request receieved!')
     var accountInfo = req.body;
-    console.log(accountInfo);
+    //console.log(accountInfo);
     var accountQuery = userModel.findOne(accountInfo, function (err, result) {
         if (err) return handleError(err);
         if (result == null) {
-            console.log("1");
+            console.log("User not found");
             res.sendStatus(404);
         }
         if (result != null) {
-            console.log("2");
+            console.log(result);
             res.sendStatus(200);
         }
     });
 });
 app.post('/register', function (req, res) {
-    res.send('POST request received!');
     var postBody = req.body;
     console.log(prettyjson.render(postBody));
     var awesome = new userModel(postBody);
     console.log(awesome);
     awesome.save(function (err) {
         if (err) return handleError(err);
+        else res.sendStatus(200);
     });
     //db.save(awesome);
 });
