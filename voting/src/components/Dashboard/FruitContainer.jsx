@@ -24,29 +24,20 @@ export default class FruitContainer extends React.Component {
             if (this.state.fruits[i] == value){
                 this.setState({votedFruit: this.state.fruits[i]})
                 //console.log(i);
-                break;
+                //break;
             }
         }
     }
 
     render() {
-        if(this.state.votedOn == true){
-//            console.log(this.state.votedFruit)
-            var style = {
-                backgroundColor:'gray',
-            }
-        }
-        else{
-            style = null;
-        }
         return (
             <div>
                 <h1>What's your favorite fruit?</h1>
                 <Horizontal>
-                <Fruit fruitName="Apple"  onVote={this.handleVoteStatus}/>
-                <Fruit fruitName="Orange" onVote={this.handleVoteStatus}/>
-                <Fruit fruitName="Banana" onVote={this.handleVoteStatus}/>
-                <Fruit fruitName="Pineapple" onVote={this.handleVoteStatus}/>
+                <Fruit fruitName="Apple"  onVote={this.handleVoteStatus} votedFruit={this.state.votedFruit}/>
+                <Fruit fruitName="Orange" onVote={this.handleVoteStatus} votedFruit={this.state.votedFruit}/>
+                <Fruit fruitName="Banana" onVote={this.handleVoteStatus} votedFruit={this.state.votedFruit}/>
+                <Fruit fruitName="Pineapple" onVote={this.handleVoteStatus} votedFruit={this.state.votedFruit}/>
                 </Horizontal>
                 <br />
                 <RaisedButton label="Cast Vote!"/>

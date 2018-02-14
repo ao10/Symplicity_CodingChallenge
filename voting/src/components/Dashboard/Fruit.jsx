@@ -11,6 +11,10 @@ export default class Fruit extends React.Component {
             fruitName: this.props.fruitName,
             expanded: false,
             votedOn: false,
+            votedFruit: this.props.votedFruit,
+            style: {
+                backgroundColor: null
+            }
         }
         this.handleExpandChange = this.handleExpandChange.bind(this);
         this.handleToggle = this.handleToggle.bind(this);
@@ -36,23 +40,28 @@ export default class Fruit extends React.Component {
     };
 
     handleVote = () => {
-        this.setState({votedOn:true})
+        if(this.state.votedOn == true){
+            this.setState({votedOn:false, style:null});
+        }else{
+        this.setState({votedOn:true, style:{backgroundColor:'lightgrey'}})
+        }
         this.props.onVote(this.state.fruitName)
     }
 
     render() {
-        if(this.state.votedOn){
-            var style = {
-                backgroundColor: "lightgrey",
-            }
-        }
-        else{
-            style = null;
-        }
+        // if(this.state.votedFruit == this.state.fruitName){
+        //     console.log("hi")
+        //     var style = {
+        //         backgroundColor: "red",
+        //     }
+        // }
+        // else{
+        //     style = null;
+        // }
 
         return (
             <div>
-                <Card style={style} expanded={this.state.expanded} onExpandChange={this.handleExpandChange}>
+                <Card style={this.state.style} expanded={this.state.expanded} onExpandChange={this.handleExpandChange}>
                     <CardHeader
                         //title="Apple Header"
                         //subtitle="Apple Subtitle"
