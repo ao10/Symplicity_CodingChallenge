@@ -8,8 +8,15 @@ export default class Fruit extends React.Component {
     constructor(props){
         super(props)
         this.state = {
+            fruitName: this.props.fruitName,
             expanded: false,
+            votedOn: false,
         }
+        this.handleExpandChange = this.handleExpandChange.bind(this);
+        this.handleToggle = this.handleToggle.bind(this);
+        this.handleExpand = this.handleExpand.bind(this);
+        this.handleReduce = this.handleReduce.bind(this);
+        this.handleVote = this.handleVote.bind(this);
     }
 
     handleExpandChange = (expanded) => {
@@ -23,30 +30,44 @@ export default class Fruit extends React.Component {
     handleExpand = () => {
         this.setState({expanded: true});
     };
-    
+
     handleReduce = () => {
         this.setState({expanded: false});
     };
 
+    handleVote = () => {
+        this.setState({votedOn:true})
+        this.props.onVote(this.state.fruitName)
+    }
+
     render() {
+        if(this.state.votedOn){
+            var style = {
+                backgroundColor: "lightgrey",
+            }
+        }
+        else{
+            style = null;
+        }
+
         return (
             <div>
-                <Card expanded={this.state.expanded} onExpandChange={this.handleExpandChange}>
+                <Card style={style} expanded={this.state.expanded} onExpandChange={this.handleExpandChange}>
                     <CardHeader
                         //title="Apple Header"
                         //subtitle="Apple Subtitle"
                         //avatar=""
                     />
                     <Avatar />
-                    <CardTitle title={this.props.fruitName} subtitle="Apple subtitle" />
+                    <CardTitle title={this.props.fruitName} subtitle={this.props.fruitName}/>
+                    {/* USE PUT UPDATE TO UPDATE A USER'S VOTES. */}
                     <CardText>Vote for me please!</CardText>
                     <h1 expandable={true}>
                     SURPRISE, IT ME!
                     <FlatButton label="Hide Voters" onClick={this.handleReduce}/>
                     </h1>
                     <CardActions>
-                        <FlatButton label="Add vote" />
-                        <FlatButton label="Minus vote" />
+                        <FlatButton label="Vote for me!" onClick={this.handleVote}/>
                         <FlatButton label="See voters" onClick={this.handleExpand}/>
                     </CardActions>
                 </Card>

@@ -13,7 +13,15 @@ var userSchema = new Schema({
     username: String,
     password: String,
     email: String
+    //hasVoted: false,
+    //fruitChoice: {Apple, Banana, Orange, Pear}
 })
+var fruitSchema = new Schema({
+    fruitName: String,
+    numVotes: String,
+    voteNames: []
+})
+
 var userModel = mongoose.model('user', userSchema)
 mongoose.connect(MLAB_URI);
 var db = mongoose.connection;
