@@ -11,7 +11,6 @@ export default class LoginForm extends React.Component {
         this.state = {
             username: '',
             password: '',
-            open: false, //This is for snackbar
             statusCode: null,
         }
         this.handleUsernameChange = this.handleUsernameChange.bind(this);
@@ -35,8 +34,8 @@ export default class LoginForm extends React.Component {
         });
     };
 
-    handleStatusChange = value => {
-        this.props.handleStatus(value);
+    handleStatusChange = (value, username) => {
+        this.props.handleStatus(value, username);
     }
 
     handleSubmit = event => {
@@ -58,12 +57,9 @@ export default class LoginForm extends React.Component {
                         alert("Account not found. Please create a new account.");               
                     }
                     if(response.status == 200){
-                        this.handleStatusChange(200);
-                        this.setState({
-                            //This is for our Snackbar component
-                            open: true,
-                        })
-                        //alert("Login successful!");                        
+                        //Turn the JSON response into a string.
+                        var id = JSON.stringify(response.data.id).replace(/"/g,"");
+                        this.handleStatusChange(200, id);                        
                     }
                 })
                 .catch( error => {
@@ -94,11 +90,6 @@ export default class LoginForm extends React.Component {
                         <RaisedButton label="Login" type="submit" onClick={this.handleSubmit}/>
                     </Vertical>
                 </form>
-                <Snackbar
-                            open={this.state.open}
-                            message="Login succesful."
-                            autoHideDuration={100}
-                />
             </div>
 
         );

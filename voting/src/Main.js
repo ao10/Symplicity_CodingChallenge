@@ -8,13 +8,15 @@ class Main extends React.Component {
     super();
     this.state = {
       statusCode: null,
+      name: null,
     }
     this.handleStatusChange = this.handleStatusChange.bind(this);
   }
 
-  handleStatusChange = value => {
+  handleStatusChange = (value, username) => {
     this.setState({
       statusCode: value,
+      name: username,
     })
   }
 
@@ -23,7 +25,8 @@ class Main extends React.Component {
     if(this.state.statusCode == 200){
       return(
         <div className="Main">
-        <FruitContainer/>
+        {/* We pass in the user's name so we know who casted the vote. */}
+        <FruitContainer username={this.state.name}/>
         </div>
       )
     }

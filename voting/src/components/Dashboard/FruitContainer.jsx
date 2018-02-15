@@ -1,46 +1,70 @@
 import React from 'react';
+import axios from 'axios';
 import Fruit from './Fruit';
 import RaisedButton from 'material-ui/RaisedButton/RaisedButton';
 import { Vertical, Horizontal } from 'react-stack';
 
 export default class FruitContainer extends React.Component {
-    constructor(){
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             votedOn: false,
             fruits: ["Apple", "Orange", "Banana", "Pineapple"],
-            votedFruit: null,
+            currentFruit: null,
+            voterName: this.props.username,
         }
         this.handleVoteStatus = this.handleVoteStatus.bind(this);
+        this.handleSubmitVote = this.handleSubmitVote.bind(this);
     }
 
     handleVoteStatus = (value) => {
         //If fruit is already voted on, undo the state/CSS.
         //If another fruit has been voted for already, undo that fruit.
         console.log(value);
-        this.setState({votedOn:true});
+        this.setState({ votedOn: true });
         //value is always going to be whatever fruit clicked the vote button
-        for (var i = 0; i < this.state.fruits.length; i++){
-            if (this.state.fruits[i] == value){
-                this.setState({votedFruit: this.state.fruits[i]})
+        for (var i = 0; i < this.state.fruits.length; i++) {
+            if (this.state.fruits[i] == value) {
+                this.setState({ currentFruit: this.state.fruits[i] })
                 //console.log(i);
                 //break;
             }
         }
     }
 
+    handleSubmitVote = () => {
+        const requestBody = {
+            vote: this.state.currentFruit,
+            username: this.state.voterName,
+        }
+        axios.put('http://localhost:8080/vote', requestBody).then(
+            response => {
+                if (response.status == 405) {
+                    alert(response.message);
+                }
+                if (response.status == 204) {
+                    alert(response.message);
+                }
+            })
+            .catch(error => {
+                console.log(error.response);
+                alert(error);
+            })
+    }
+
+
     render() {
         return (
             <div>
                 <h1>What's your favorite fruit?</h1>
                 <Horizontal>
-                <Fruit fruitName="Apple"  onVote={this.handleVoteStatus} votedFruit={this.state.votedFruit}/>
-                <Fruit fruitName="Orange" onVote={this.handleVoteStatus} votedFruit={this.state.votedFruit}/>
-                <Fruit fruitName="Banana" onVote={this.handleVoteStatus} votedFruit={this.state.votedFruit}/>
-                <Fruit fruitName="Pineapple" onVote={this.handleVoteStatus} votedFruit={this.state.votedFruit}/>
+                    <Fruit fruitName="Apple" onVote={this.handleVoteStatus} votedFruit={this.state.currentFruit} />
+                    <Fruit fruitName="Orange" onVote={this.handleVoteStatus} votedFruit={this.state.currentFruit} />
+                    <Fruit fruitName="Banana" onVote={this.handleVoteStatus} votedFruit={this.state.currentFruit} />
+                    <Fruit fruitName="Pineapple" onVote={this.handleVoteStatus} votedFruit={this.state.currentFruit} />
                 </Horizontal>
                 <br />
-                <RaisedButton label="Cast Vote!"/>
+                <RaisedButton label="Cast Vote!" onClick={this.handleSubmitVote} />
             </div>
         )
     }

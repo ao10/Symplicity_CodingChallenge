@@ -26,8 +26,8 @@ export default class LoginContainer extends React.Component {
         })
     }
 
-    handleUpdateChange = (value) => {
-        this.props.handleStatus(value);
+    handleUpdateChange = (value, username) => {
+        this.props.handleStatus(value, username);
     }
 
 
@@ -36,9 +36,9 @@ export default class LoginContainer extends React.Component {
             display: 'flex',
             justifyContent: 'center',
         }
-        if(this.state.statusCode == 200){
-            return <div><h1>IT WORKS!</h1></div>
-        }
+        // if(this.state.statusCode == 200){
+        //     return <div><h1>IT WORKS!</h1></div>
+        // }
         return (
             <div style={{ marginTop: '10%' }}>
                 <h1>Voting App</h1>
