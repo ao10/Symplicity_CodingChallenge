@@ -47,7 +47,7 @@ export default class RegisterForm extends React.Component {
             console.log("Please fill all fields")
         }
         else {
-            axios.post('http://localhost:8080/register', formData)
+            axios.post('https://symplicity-challenge-server.herokuapp.com/register', formData)
                 .then(response => {
                     if(response.status == 200){
                         this.setState({

@@ -37,27 +37,9 @@ export default class Fruit extends React.Component {
     };
 
     handleVote = () => {
-        // if(this.state.votedOn == true){
-        //     this.setState({votedOn:false, style:null});
-        // }
-        // else{
-        //     this.setState({votedOn:true, style:{backgroundColor:'lightgrey'}})
-        // }
         this.props.onVote(this.state.fruitName)
     }
-    // componentWillReceiveProps(){
-    //     if(this.state.fruitName == this.state.votedFruit){
-    //         //console.log(this.state.fruitName)
-    //         this.setState({style:{backgroundColor:"blue"}})
-    //     }
-    // }
-    // componentDidUpdate(){
-    //     if(this.state.currentFruit != this.state.fruitName){            
-    //         this.setState({style:{backgroundColor:'red'}})
-    //     }
-    // }
     render() {
-        //We only
         if (this.props.fruitName == this.props.votedFruit) {
             var style = {
                 backgroundColor: "lightgrey",

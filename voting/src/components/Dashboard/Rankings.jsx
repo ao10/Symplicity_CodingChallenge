@@ -13,7 +13,7 @@ export default class Rankings extends React.Component {
     }
 
     componentDidMount(){
-        axios.get("http://localhost:8080/rankings").then(
+        axios.get("https://symplicity-challenge-server.herokuapp.com/rankings").then(
             response => {
                 var sortResponse = response.data;
                 this.setState({rankingData: response.data})
