@@ -51,7 +51,7 @@ export default class LoginForm extends React.Component {
             console.log("Please fill all fields")
         }
         else {
-            axios.post('https://symplicity-challenge-server.herokuapp.com/login', formData)
+            axios.post('http://symplicity-challenge-server.herokuapp.com/login', formData)
                 .then(response => {
                     if(response.status == 404){
                         alert("Account not found. Please create a new account.");               
