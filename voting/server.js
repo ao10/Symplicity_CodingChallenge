@@ -68,8 +68,16 @@ app.post('/register', function (req, res) {
         if (err) return handleError(err);
         else res.sendStatus(200);
     });
-    //db.save(awesome);
 });
+
+app.get('/rankings', function(req, res){
+    var myArray = {};
+    //This endpoint will be accessed when we render the number of votes per fruit.
+    var cursor = db.collection('fruits').find().toArray(function(err, result){
+        var myArray = result;
+        res.status(200).send(myArray);
+    });
+}); 
 
 app.put('/vote', function (req, res) {
     var alreadyVoted = false;
@@ -89,9 +97,9 @@ app.put('/vote', function (req, res) {
         else{
             var fruitQuery2 = fruitModel.findOneAndUpdate({"fruitName": req.body.vote},{ $inc: { numVotes: 1 } , "$push": { "voterNames": req.body.username } }
             , function (err, result) {
-                //console.log(result);
-                res.status(204).send({message:"Vote successful."})
+                console.log(result);                
             });
+            res.status(204).send({message:"Vote successful."})
         }
     });
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import Fruit from './Fruit';
+import Rankings from './Rankings';
 import RaisedButton from 'material-ui/RaisedButton/RaisedButton';
 import { Vertical, Horizontal } from 'react-stack';
 
@@ -12,6 +13,7 @@ export default class FruitContainer extends React.Component {
             fruits: ["Apple", "Orange", "Banana", "Pineapple"],
             currentFruit: null,
             voterName: this.props.username,
+            rankings:[],            
         }
         this.handleVoteStatus = this.handleVoteStatus.bind(this);
         this.handleSubmitVote = this.handleSubmitVote.bind(this);
@@ -39,16 +41,11 @@ export default class FruitContainer extends React.Component {
         }
         axios.put('http://localhost:8080/vote', requestBody).then(
             response => {
-                if (response.status == 405) {
-                    alert(response.message);
-                }
-                if (response.status == 204) {
-                    alert(response.message);
-                }
+                console.log(response);
+                alert(response.data.message);
             })
             .catch(error => {
-                console.log(error.response);
-                alert(error);
+                alert(error.response.data.message);
             })
     }
 
@@ -65,6 +62,8 @@ export default class FruitContainer extends React.Component {
                 </Horizontal>
                 <br />
                 <RaisedButton label="Cast Vote!" onClick={this.handleSubmitVote} />
+                <hr />
+                <Rankings />
             </div>
         )
     }

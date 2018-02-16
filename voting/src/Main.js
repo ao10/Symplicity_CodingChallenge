@@ -27,6 +27,7 @@ class Main extends React.Component {
         <div className="Main">
         {/* We pass in the user's name so we know who casted the vote. */}
         <FruitContainer username={this.state.name}/>
+        {/* <FruitRankings /> */}
         </div>
       )
     }
