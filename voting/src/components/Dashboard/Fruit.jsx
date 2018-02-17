@@ -59,7 +59,7 @@ export default class Fruit extends React.Component {
                     {/* USE PUT UPDATE TO UPDATE A USER'S VOTES. */}
                     <CardText>Vote for me please!</CardText>
                     <h1 expandable={true}>
-                        SURPRISE, IT ME!
+                        List of voters go here.
                     <FlatButton label="Hide Voters" onClick={this.handleReduce} />
                     </h1>
                     <CardActions>
