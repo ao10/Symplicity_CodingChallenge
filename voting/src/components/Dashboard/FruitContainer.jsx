@@ -39,7 +39,7 @@ export default class FruitContainer extends React.Component {
             vote: this.state.currentFruit,
             username: this.state.voterName,
         }
-        axios.put('http://symplicity-challenge-server.herokuapp.com/vote', requestBody).then(
+        axios.put('https://symplicity-challenge-server.herokuapp.com/vote', requestBody).then(
             response => {
                 console.log(response);
                 alert(response.data.message);
