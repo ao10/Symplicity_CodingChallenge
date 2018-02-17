@@ -45,7 +45,7 @@ export default class FruitContainer extends React.Component {
                 alert(response.data.message);
             })
             .catch(error => {
-                alert(error.response.data.message);
+                alert(error);
             })
     }
 
